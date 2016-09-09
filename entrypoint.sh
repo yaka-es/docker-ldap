@@ -156,4 +156,8 @@ fi
 
 args="${args} -d 0"
 
+# See bug https://github.com/docker/docker/issues/8231
+ulimit -n 1024
+
 exec /usr/sbin/slapd -h "${DAEMON_URLS}" ${args}
+
