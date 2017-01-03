@@ -32,12 +32,12 @@ run_server() {
 
 	args="-h ${DAEMON_URLS} -u ${ldap_group} -g ${ldap_user}"
 
-	if [ -f "${config_file}" ]; then
-		args="${args} -f ${config_file}"
-
-	elif [ -d "${config_dir}" ]; then
+	if [ -d "${config_dir}" ]; then
 		# http://www.openldap.org/doc/admin24/slapdconf2.html
 		args="${args} -f ${config_file} -F ${config_dir}"
+
+	elif [ -f "${config_file}" ]; then
+		args="${args} -f ${config_file}"
 	fi
 
 	args="${args} -d stats $*"
@@ -72,6 +72,7 @@ argsfile	${run_dir}/slapd.args
 
 # Load dynamic backend modules:
 modulepath	/usr/lib/openldap
+moduleload	back_hdb.so
 #moduleload	back_sock.so
 #moduleload	back_shell.so
 #moduleload	back_relay.so
